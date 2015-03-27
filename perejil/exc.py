@@ -1,0 +1,2 @@
+class PerejilError(Exception):
+    pass

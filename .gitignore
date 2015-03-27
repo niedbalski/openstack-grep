@@ -1,0 +1,15 @@
+*.pyc
+*.DS_Store
+*.egg
+*.egg-info
+*.sw?
+AUTHORS
+ChangeLog
+build/*
+build-stamp
+cover/*
+doc/build/
+doc/source/api/
+.coverage
+.tox/
+.venv/

@@ -11,6 +11,7 @@ class Server(object):
     def __init__(self, hostname):
         self.hostname = hostname
         self.username = None
+        self.password = None
         self.identity_file = None
         self.services = []
         self.log = logging.getLogger(self.__class__.__name__)
@@ -18,6 +19,7 @@ class Server(object):
 
 class Service(object):
     name = None
+    log_files = []
 
     def __init__(self, server=None, cfg=None):
         self.server = server
@@ -52,6 +54,7 @@ klasses = {
     'nova-api': NovaApi,
 }
 
+
 class Config(object):
     def __init__(self, fpath):
         self.fpath = fpath
@@ -64,7 +67,8 @@ class Config(object):
             return self._cfg
 
         if not os.path.isfile(self.fpath):
-            raise exc.PerejilError("'%s' no such file or directory" % self.fpath)
+            raise exc.PerejilError("'%s' no such file or directory" %
+                                   self.fpath)
 
         with open(self.fpath, 'rb') as f:
             self._cfg = yaml.safe_load(f.read())
@@ -85,7 +89,10 @@ class Config(object):
                     server.username = node.get('username',
                                                self.cfg['default-username'])
                     server.identity_file = node.get('identity-file',
-                                                    self.cfg['default-identity-file'])
+                                                self.cfg['default-identity-file'])
+                    server.password = node.get('password',
+                                               self.cfg.get('password', None))
+
                     hosts[hostname] = server
 
                 klass = klasses[service_name]

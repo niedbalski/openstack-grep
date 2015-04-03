@@ -9,7 +9,7 @@ class TestConfig(unittest.TestCase):
         self.fixtures_dir = os.path.join(self.dot, 'fixtures')
 
     def test_config_sample(self):
-        c = env.Config(os.path.join(self.dot, '..', '..', 'config.sample.yaml'))
+        c = env.Config(os.path.join(self.dot, '..', '..',
+                                    'config.sample.yaml'))
         (hosts, services) = c.build_env()
-
         self.assertEqual(list(hosts.keys()), ['example.com'])
